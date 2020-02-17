@@ -27,7 +27,9 @@ namespace SuperHero.Controllers
         // GET: Superheros/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+           
+
+            return View(id);
         }
 
         // GET: Superheros/Create
@@ -57,21 +59,24 @@ namespace SuperHero.Controllers
         }
 
         // GET: Superheros/Edit/5
-        public ActionResult Edit(int id)
+        public ActionResult Edit()
         {
-            return View();
+            Superhero superhero = new Superhero();
+            return View(superhero);
         }
 
         // POST: Superheros/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(Superhero superhero)
         {
             try
             {
                 // TODO: Add update logic here
+                _context.Superheroes.Update(superhero);
+                _context.SaveChanges();
 
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Index");
             }
             catch
             {
@@ -80,21 +85,23 @@ namespace SuperHero.Controllers
         }
 
         // GET: Superheros/Delete/5
-        public ActionResult Delete(int id)
+        public ActionResult Delete()
         {
-            return View();
+            Superhero superhero = new Superhero();
+            return View(superhero);
         }
 
         // POST: Superheros/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public ActionResult Delete(Superhero superhero)
         {
             try
             {
                 // TODO: Add delete logic here
-
-                return RedirectToAction(nameof(Index));
+                _context.Superheroes.Remove(superhero);
+                _context.SaveChanges();
+                return RedirectToAction("Index");
             }
             catch
             {
