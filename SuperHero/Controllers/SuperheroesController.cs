@@ -28,7 +28,7 @@ namespace SuperHero.Controllers
         // GET: Superheros/Details/5
         public ActionResult Details(int id)
         {
-            Superhero superhero = _context.Superheroes.Where(s => s.Id == id).FirstOrDefault();
+          var superhero = _context.Superheroes.Where(s => s.Id == id).FirstOrDefault();
 
             return View(superhero);
         }
@@ -62,7 +62,7 @@ namespace SuperHero.Controllers
         // GET: Superheros/Edit/5
         public ActionResult Edit(int id)
         {
-            Superhero superhero = _context.Superheroes.Find(id);
+            var superhero = _context.Superheroes.Find(id);
             return View(superhero);
         }
 
@@ -75,7 +75,7 @@ namespace SuperHero.Controllers
             {
                 // TODO: Add update logic here
 
-                Superhero Dbheroes = _context.Superheroes.Where(s => s.Id == superhero.Id).FirstOrDefault();
+                var Dbheroes = _context.Superheroes.Where(s => s.Id == superhero.Id).FirstOrDefault();
                 Dbheroes.Name = superhero.Name;
                 Dbheroes.AlterEgo = superhero.AlterEgo;
                 Dbheroes.primarySuperheroAbility = superhero.primarySuperheroAbility;
@@ -95,7 +95,7 @@ namespace SuperHero.Controllers
         // GET: Superheros/Delete/5
         public ActionResult Delete(int id)
         {
-            Superhero superhero = _context.Superheroes.Find(id);
+            var superhero = _context.Superheroes.Find(id);
             return View(superhero);
         }
 
