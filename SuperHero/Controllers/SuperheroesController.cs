@@ -20,16 +20,17 @@ namespace SuperHero.Controllers
         // GET: Superheros
         public ActionResult Index()
         {
+            List<Models.Superhero> Supers = _context.Superheroes.ToList();
            
-            return View();
+            return View(Supers);
         }
 
         // GET: Superheros/Details/5
         public ActionResult Details(int id)
         {
-           
+            Superhero superhero = _context.Superheroes.Where(s => s.Id == id).FirstOrDefault();
 
-            return View(id);
+            return View(superhero);
         }
 
         // GET: Superheros/Create
@@ -44,7 +45,7 @@ namespace SuperHero.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(Superhero superhero)
         {
-            try
+            if(ModelState.IsValid)
             {
                 // TODO: Add insert logic here
 
@@ -52,16 +53,16 @@ namespace SuperHero.Controllers
                 _context.SaveChanges();
                 return RedirectToAction("Index");
             }
-            catch
-            {
+            
+            
                 return View();
-            }
+            
         }
 
         // GET: Superheros/Edit/5
-        public ActionResult Edit()
+        public ActionResult Edit(int id)
         {
-            Superhero superhero = new Superhero();
+            Superhero superhero = _context.Superheroes.Find(id);
             return View(superhero);
         }
 
@@ -70,24 +71,31 @@ namespace SuperHero.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(Superhero superhero)
         {
-            try
+            if(ModelState.IsValid)
             {
                 // TODO: Add update logic here
-                _context.Superheroes.Update(superhero);
+
+                Superhero Dbheroes = _context.Superheroes.Where(s => s.Id == superhero.Id).FirstOrDefault();
+                Dbheroes.Name = superhero.Name;
+                Dbheroes.AlterEgo = superhero.AlterEgo;
+                Dbheroes.primarySuperheroAbility = superhero.primarySuperheroAbility;
+                Dbheroes.SecondarySuperheroAbility = superhero.SecondarySuperheroAbility;
+                Dbheroes.Catchphrase = superhero.Catchphrase;
                 _context.SaveChanges();
+
 
                 return RedirectToAction("Index");
             }
-            catch
-            {
+            
+            
                 return View();
-            }
+            
         }
 
         // GET: Superheros/Delete/5
-        public ActionResult Delete()
+        public ActionResult Delete(int id)
         {
-            Superhero superhero = new Superhero();
+            Superhero superhero = _context.Superheroes.Find(id);
             return View(superhero);
         }
 
@@ -105,8 +113,10 @@ namespace SuperHero.Controllers
             }
             catch
             {
-                return View();
+                return RedirectToAction("Delete");
             }
+                
+            
         }
     }
 }
